@@ -1,0 +1,9 @@
+{
+  "event_id": "092507-008-sample-001",
+  "event_type": "SOURCE_VERIFIED",
+  "aggregate_type": "source_incident",
+  "aggregate_id": "journalism_case_library-001",
+  "occurred_at": "2026-09-24T12:00:00+08:00",
+  "version": 1,
+  "payload": {}
+}

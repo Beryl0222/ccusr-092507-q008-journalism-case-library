@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "融合新闻案例使用库领域事件",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "aggregate_type",
+    "aggregate_id",
+    "occurred_at",
+    "version",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "SOURCE_VERIFIED",
+        "CASE_REVIEWED",
+        "COURSE_FROZEN",
+        "ACCESS_REVOKED",
+        "FOLLOWUP_ISSUED"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "source_incident",
+        "teaching_case",
+        "course_adoption",
+        "rights_review"
+      ]
+    },
+    "aggregate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "payload_required_by_event": {
+    "CASE_REVIEWED": [
+      "fact_review_id",
+      "rights_review_id"
+    ],
+    "COURSE_FROZEN": [
+      "term_id",
+      "case_versions"
+    ],
+    "ACCESS_REVOKED": [
+      "scope",
+      "effective_at"
+    ]
+  },
+  "additionalProperties": false
+}
