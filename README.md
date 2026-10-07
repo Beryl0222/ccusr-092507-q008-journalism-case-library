@@ -4,7 +4,7 @@
 
 ## 目录
 
-- `contracts/domain.schema.json`：事件信封、对象类型和事件载荷约定。
+- `contracts/domain.schema.json`：事件信封、版本化对象、角色与事件载荷约定。
 - `data/sample.json`：可直接校验的中文联调样例。
 - `src/`：契约校验与命令行入口。
 - `tests/`：基础字段、时间版本和事件载荷边界测试。

@@ -5,5 +5,8 @@
   "aggregate_id": "journalism_case_library-001",
   "occurred_at": "2026-09-24T12:00:00+08:00",
   "version": 1,
-  "payload": {}
+  "actor_role": "fact_checker",
+  "payload": {
+    "content_fingerprint": "sha256:7f3a9c1e5b2d8f40a6e1c39b075d4f28a9c6e3b15d08f2a47c95e1b36d0a84c2"
+  }
 }

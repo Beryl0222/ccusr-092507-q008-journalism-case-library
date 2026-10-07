@@ -9,6 +9,7 @@
     "aggregate_id",
     "occurred_at",
     "version",
+    "actor_role",
     "payload"
   ],
   "properties": {
@@ -19,20 +20,43 @@
     "event_type": {
       "type": "string",
       "enum": [
+        "VERSION_PUBLISHED",
         "SOURCE_VERIFIED",
+        "NARRATIVE_PROPOSED",
+        "FACT_REVIEWED",
+        "RIGHTS_REVIEWED",
         "CASE_REVIEWED",
+        "COURSE_ADOPTED",
         "COURSE_FROZEN",
+        "ACCESS_SCOPED",
+        "ACCESS_RESTRICTED",
         "ACCESS_REVOKED",
-        "FOLLOWUP_ISSUED"
+        "RULING_RECORDED",
+        "CORRECTION_ISSUED",
+        "LICENSE_WITHDRAWN",
+        "IMPACT_ASSESSED",
+        "FOLLOWUP_ISSUED",
+        "REREVIEW_QUEUED",
+        "WITHDRAWAL_NOTIFIED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "source_incident",
+        "source_evidence",
+        "rights_holder",
+        "deidentified_version",
+        "ethics_issue",
+        "regulation",
+        "textbook_chapter",
+        "course_objective",
+        "classroom_material",
+        "access_scope",
         "teaching_case",
-        "course_adoption",
-        "rights_review"
+        "fact_review",
+        "rights_review",
+        "course_adoption"
       ]
     },
     "aggregate_id": {
@@ -47,22 +71,132 @@
       "type": "integer",
       "minimum": 1
     },
+    "actor_role": {
+      "type": "string",
+      "enum": [
+        "case_editor",
+        "fact_checker",
+        "rights_reviewer",
+        "instructor",
+        "governance",
+        "system"
+      ]
+    },
     "payload": {
       "type": "object"
     }
   },
+  "actor_roles_by_event": {
+    "SOURCE_VERIFIED": ["fact_checker"],
+    "NARRATIVE_PROPOSED": ["case_editor"],
+    "FACT_REVIEWED": ["fact_checker"],
+    "RIGHTS_REVIEWED": ["rights_reviewer"],
+    "CASE_REVIEWED": ["governance", "system"],
+    "COURSE_ADOPTED": ["instructor"],
+    "COURSE_FROZEN": ["instructor", "system"],
+    "ACCESS_SCOPED": ["rights_reviewer", "governance"],
+    "ACCESS_RESTRICTED": ["rights_reviewer", "governance", "system"],
+    "ACCESS_REVOKED": ["rights_reviewer", "governance", "system"],
+    "RULING_RECORDED": ["governance", "system"],
+    "CORRECTION_ISSUED": ["case_editor", "governance"],
+    "LICENSE_WITHDRAWN": ["rights_reviewer", "governance", "system"],
+    "IMPACT_ASSESSED": ["system", "governance"],
+    "FOLLOWUP_ISSUED": ["governance", "system"],
+    "REREVIEW_QUEUED": ["system", "governance"],
+    "WITHDRAWAL_NOTIFIED": ["system", "governance"]
+  },
+  "aggregate_types_by_event": {
+    "SOURCE_VERIFIED": ["source_incident"],
+    "NARRATIVE_PROPOSED": ["teaching_case"],
+    "FACT_REVIEWED": ["fact_review"],
+    "RIGHTS_REVIEWED": ["rights_review"],
+    "CASE_REVIEWED": ["teaching_case"],
+    "COURSE_ADOPTED": ["course_adoption"],
+    "COURSE_FROZEN": ["course_adoption"],
+    "ACCESS_SCOPED": ["access_scope"],
+    "ACCESS_RESTRICTED": ["access_scope"],
+    "ACCESS_REVOKED": ["access_scope"],
+    "RULING_RECORDED": ["regulation"],
+    "CORRECTION_ISSUED": ["teaching_case", "source_incident", "classroom_material"],
+    "LICENSE_WITHDRAWN": ["rights_holder", "source_evidence"],
+    "IMPACT_ASSESSED": ["course_adoption"],
+    "FOLLOWUP_ISSUED": ["course_adoption"],
+    "REREVIEW_QUEUED": ["teaching_case"],
+    "WITHDRAWAL_NOTIFIED": ["course_adoption"]
+  },
   "payload_required_by_event": {
-    "CASE_REVIEWED": [
-      "fact_review_id",
-      "rights_review_id"
-    ],
-    "COURSE_FROZEN": [
-      "term_id",
-      "case_versions"
-    ],
-    "ACCESS_REVOKED": [
-      "scope",
-      "effective_at"
+    "VERSION_PUBLISHED": ["content_fingerprint"],
+    "SOURCE_VERIFIED": ["content_fingerprint"],
+    "NARRATIVE_PROPOSED": ["based_on"],
+    "FACT_REVIEWED": ["verdict"],
+    "RIGHTS_REVIEWED": ["verdict"],
+    "CASE_REVIEWED": ["fact_review_id", "rights_review_id"],
+    "COURSE_ADOPTED": ["course_id", "term_id", "case_version"],
+    "COURSE_FROZEN": ["term_id", "case_versions", "snapshot_id"],
+    "ACCESS_SCOPED": ["scope", "export_allowed", "citation_format"],
+    "ACCESS_RESTRICTED": ["scope", "reason_code", "export_allowed", "effective_at"],
+    "ACCESS_REVOKED": ["scope", "effective_at", "reason_code"],
+    "RULING_RECORDED": ["conclusion"],
+    "CORRECTION_ISSUED": ["corrects_version"],
+    "LICENSE_WITHDRAWN": ["effective_at"],
+    "IMPACT_ASSESSED": ["trigger_event_id", "phase", "action"],
+    "FOLLOWUP_ISSUED": ["basis_snapshot_id", "action"],
+    "REREVIEW_QUEUED": ["dedupe_key", "review_kind"],
+    "WITHDRAWAL_NOTIFIED": ["dedupe_key"]
+  },
+  "payload_enum_by_event": {
+    "FACT_REVIEWED": {
+      "verdict": ["approved", "changes_requested", "rejected"]
+    },
+    "RIGHTS_REVIEWED": {
+      "verdict": ["approved", "changes_requested", "rejected"]
+    },
+    "ACCESS_SCOPED": {
+      "scope": ["minimal", "classroom", "course"],
+      "export_allowed": [true, false]
+    },
+    "ACCESS_RESTRICTED": {
+      "scope": ["minimal"],
+      "reason_code": ["minor_involved", "unresolved_dispute", "license_suspended", "regulatory_flag"],
+      "export_allowed": [false]
+    },
+    "ACCESS_REVOKED": {
+      "reason_code": ["license_withdrawn", "rights_holder_request", "ruling_recorded", "correction_issued", "policy_change"]
+    },
+    "IMPACT_ASSESSED": {
+      "phase": ["preparing", "active", "archived"],
+      "action": ["none", "notify_teacher", "swap_case_version", "restrict_access", "revoke_access"]
+    },
+    "FOLLOWUP_ISSUED": {
+      "action": ["notify_teacher", "swap_case_version", "restrict_access", "revoke_access", "archive_annotation"]
+    },
+    "REREVIEW_QUEUED": {
+      "review_kind": ["fact", "rights"]
+    }
+  },
+  "payload_pattern_by_event": {
+    "VERSION_PUBLISHED": {
+      "content_fingerprint": "^sha256:[0-9a-f]{64}$"
+    },
+    "SOURCE_VERIFIED": {
+      "content_fingerprint": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "payload_positive_integer_by_event": {
+    "COURSE_ADOPTED": ["case_version"],
+    "CORRECTION_ISSUED": ["corrects_version"]
+  },
+  "payload_timezone_by_event": {
+    "ACCESS_RESTRICTED": ["effective_at"],
+    "ACCESS_REVOKED": ["effective_at"],
+    "LICENSE_WITHDRAWN": ["effective_at"]
+  },
+  "payload_implications_by_event": {
+    "ACCESS_SCOPED": [
+      {
+        "when": { "field": "scope", "equals": "minimal" },
+        "then": { "field": "export_allowed", "equals": false }
+      }
     ]
   },
   "additionalProperties": false
