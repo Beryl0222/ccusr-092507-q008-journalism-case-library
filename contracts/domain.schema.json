@@ -19,20 +19,54 @@
     "event_type": {
       "type": "string",
       "enum": [
+        "INCIDENT_REGISTERED",
+        "SOURCE_SUBMITTED",
+        "SOURCE_DEDUPLICATED",
+        "EVIDENCE_VERSIONED",
         "SOURCE_VERIFIED",
+        "FACT_REVIEW_COMPLETED",
+        "RIGHTS_REVIEW_COMPLETED",
+        "DEIDENTIFICATION_PUBLISHED",
+        "ETHICAL_ISSUE_RECORDED",
+        "REGULATION_UPDATED",
+        "CHAPTER_RELEASED",
+        "OBJECTIVE_DEFINED",
+        "CASE_PROPOSED",
         "CASE_REVIEWED",
-        "COURSE_FROZEN",
+        "MATERIAL_PUBLISHED",
+        "ACCESS_SCOPED",
+        "RESTRICTION_IMPOSED",
+        "EXPORT_DENIED",
         "ACCESS_REVOKED",
-        "FOLLOWUP_ISSUED"
+        "COURSE_ADOPTED",
+        "COURSE_FROZEN",
+        "RULING_RECORDED",
+        "CORRECTION_ISSUED",
+        "LICENSE_WITHDRAWN",
+        "IMPACT_ASSESSED",
+        "FOLLOWUP_ISSUED",
+        "NOTIFICATION_DISPATCHED"
       ]
     },
     "aggregate_type": {
       "type": "string",
       "enum": [
         "source_incident",
+        "source_evidence",
+        "rights_holder",
+        "deidentified_version",
+        "ethical_issue",
+        "applicable_regulation",
+        "textbook_chapter",
+        "course_objective",
+        "classroom_material",
+        "access_scope",
         "teaching_case",
+        "fact_review",
+        "rights_review",
         "course_adoption",
-        "rights_review"
+        "followup_disposition",
+        "notification"
       ]
     },
     "aggregate_id": {
@@ -51,19 +85,103 @@
       "type": "object"
     }
   },
+  "aggregate_by_event": {
+    "INCIDENT_REGISTERED": ["source_incident"],
+    "SOURCE_SUBMITTED": ["source_evidence"],
+    "SOURCE_DEDUPLICATED": ["source_incident"],
+    "EVIDENCE_VERSIONED": ["source_evidence"],
+    "SOURCE_VERIFIED": ["source_incident"],
+    "FACT_REVIEW_COMPLETED": ["fact_review"],
+    "RIGHTS_REVIEW_COMPLETED": ["rights_review"],
+    "DEIDENTIFICATION_PUBLISHED": ["deidentified_version"],
+    "ETHICAL_ISSUE_RECORDED": ["ethical_issue"],
+    "REGULATION_UPDATED": ["applicable_regulation"],
+    "CHAPTER_RELEASED": ["textbook_chapter"],
+    "OBJECTIVE_DEFINED": ["course_objective"],
+    "CASE_PROPOSED": ["teaching_case"],
+    "CASE_REVIEWED": ["teaching_case"],
+    "MATERIAL_PUBLISHED": ["classroom_material"],
+    "ACCESS_SCOPED": ["access_scope"],
+    "RESTRICTION_IMPOSED": ["access_scope"],
+    "EXPORT_DENIED": ["classroom_material"],
+    "ACCESS_REVOKED": ["access_scope"],
+    "COURSE_ADOPTED": ["course_adoption"],
+    "COURSE_FROZEN": ["course_adoption"],
+    "RULING_RECORDED": ["source_incident"],
+    "CORRECTION_ISSUED": ["teaching_case"],
+    "LICENSE_WITHDRAWN": ["rights_holder"],
+    "IMPACT_ASSESSED": ["course_adoption"],
+    "FOLLOWUP_ISSUED": ["followup_disposition"],
+    "NOTIFICATION_DISPATCHED": ["notification"]
+  },
   "payload_required_by_event": {
-    "CASE_REVIEWED": [
-      "fact_review_id",
-      "rights_review_id"
-    ],
-    "COURSE_FROZEN": [
-      "term_id",
-      "case_versions"
-    ],
-    "ACCESS_REVOKED": [
-      "scope",
-      "effective_at"
-    ]
+    "INCIDENT_REGISTERED": ["title", "category"],
+    "SOURCE_SUBMITTED": ["incident_id", "content_fingerprint"],
+    "SOURCE_DEDUPLICATED": ["content_fingerprint", "existing_evidence_id"],
+    "EVIDENCE_VERSIONED": ["content_fingerprint", "supersedes_version"],
+    "SOURCE_VERIFIED": ["fact_review_id"],
+    "FACT_REVIEW_COMPLETED": ["reviewer_id", "verdict"],
+    "RIGHTS_REVIEW_COMPLETED": ["reviewer_id", "decision"],
+    "DEIDENTIFICATION_PUBLISHED": ["source_evidence_id", "anonymization_level"],
+    "ETHICAL_ISSUE_RECORDED": ["summary"],
+    "REGULATION_UPDATED": ["regulation_ref", "effective_at"],
+    "CHAPTER_RELEASED": ["textbook_id", "edition"],
+    "OBJECTIVE_DEFINED": ["course_id", "summary"],
+    "CASE_PROPOSED": ["editor_id", "chapter_id"],
+    "CASE_REVIEWED": ["fact_review_id", "rights_review_id", "decision"],
+    "MATERIAL_PUBLISHED": ["case_id", "access_scope_id", "citation_format"],
+    "ACCESS_SCOPED": ["material_id", "audience"],
+    "RESTRICTION_IMPOSED": ["material_id", "reason", "scope", "effective_at"],
+    "EXPORT_DENIED": ["requested_by", "reason"],
+    "ACCESS_REVOKED": ["scope", "effective_at"],
+    "COURSE_ADOPTED": ["course_id", "case_id", "case_version"],
+    "COURSE_FROZEN": ["term_id", "case_versions"],
+    "RULING_RECORDED": ["ruling_ref", "effective_at"],
+    "CORRECTION_ISSUED": ["reason", "effective_at"],
+    "LICENSE_WITHDRAWN": ["license_ref", "effective_at"],
+    "IMPACT_ASSESSED": ["cause_event_id", "phase", "action"],
+    "FOLLOWUP_ISSUED": ["course_id", "disposition", "basis_version"],
+    "NOTIFICATION_DISPATCHED": ["notification_id", "dedup_key", "kind", "caused_by_event_id"]
+  },
+  "payload_enum_by_event": {
+    "INCIDENT_REGISTERED": {
+      "category": ["deepfake", "algorithm_black_box", "mobile_livestream", "other"]
+    },
+    "FACT_REVIEW_COMPLETED": {
+      "verdict": ["confirmed", "partially_confirmed", "refuted", "unverifiable"]
+    },
+    "RIGHTS_REVIEW_COMPLETED": {
+      "decision": ["granted", "granted_with_limits", "denied"]
+    },
+    "DEIDENTIFICATION_PUBLISHED": {
+      "anonymization_level": ["partial", "full"]
+    },
+    "CASE_REVIEWED": {
+      "decision": ["approved", "approved_with_restrictions", "rejected"]
+    },
+    "ACCESS_SCOPED": {
+      "audience": ["public", "enrolled_students", "instructors_only", "minimal"]
+    },
+    "RESTRICTION_IMPOSED": {
+      "reason": ["minor_involved", "pending_dispute", "license_limit", "regulatory_order"],
+      "scope": ["minimal", "instructors_only"]
+    },
+    "EXPORT_DENIED": {
+      "reason": ["minor_involved", "pending_dispute", "license_limit", "regulatory_order", "scope_exceeded"]
+    },
+    "ACCESS_REVOKED": {
+      "scope": ["public", "enrolled_students", "instructors_only", "all"]
+    },
+    "IMPACT_ASSESSED": {
+      "phase": ["preparing", "in_session", "archived"],
+      "action": ["none", "notify", "re_review", "suspend_material", "annotate_record"]
+    },
+    "FOLLOWUP_ISSUED": {
+      "disposition": ["record_annotated", "material_replaced", "student_notified", "case_retired"]
+    },
+    "NOTIFICATION_DISPATCHED": {
+      "kind": ["re_review_request", "withdrawal_notice", "followup_notice"]
+    }
   },
   "additionalProperties": false
 }

@@ -1,0 +1,340 @@
+[
+  {
+    "event_id": "evt-2026-0001",
+    "event_type": "INCIDENT_REGISTERED",
+    "aggregate_type": "source_incident",
+    "aggregate_id": "incident-deepfake-0001",
+    "occurred_at": "2026-09-01T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "title": "某平台深度伪造视频冒充记者采访事件",
+      "category": "deepfake"
+    }
+  },
+  {
+    "event_id": "evt-2026-0002",
+    "event_type": "SOURCE_SUBMITTED",
+    "aggregate_type": "source_evidence",
+    "aggregate_id": "evidence-0001",
+    "occurred_at": "2026-09-01T09:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "incident_id": "incident-deepfake-0001",
+      "content_fingerprint": "sha256:9f2c4a7e1b3d58f0",
+      "source_kind": "video",
+      "submitted_by": "editor-wang"
+    }
+  },
+  {
+    "event_id": "evt-2026-0003",
+    "event_type": "SOURCE_DEDUPLICATED",
+    "aggregate_type": "source_incident",
+    "aggregate_id": "incident-deepfake-0001",
+    "occurred_at": "2026-09-02T10:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "content_fingerprint": "sha256:9f2c4a7e1b3d58f0",
+      "existing_evidence_id": "evidence-0001"
+    }
+  },
+  {
+    "event_id": "evt-2026-0004",
+    "event_type": "EVIDENCE_VERSIONED",
+    "aggregate_type": "source_evidence",
+    "aggregate_id": "evidence-0001",
+    "occurred_at": "2026-09-03T11:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "content_fingerprint": "sha256:7a1b3d58f09f2c4a",
+      "supersedes_version": 1
+    }
+  },
+  {
+    "event_id": "evt-2026-0005",
+    "event_type": "FACT_REVIEW_COMPLETED",
+    "aggregate_type": "fact_review",
+    "aggregate_id": "fact-review-0001",
+    "occurred_at": "2026-09-04T14:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "reviewer_id": "factchecker-li",
+      "verdict": "confirmed"
+    }
+  },
+  {
+    "event_id": "evt-2026-0006",
+    "event_type": "SOURCE_VERIFIED",
+    "aggregate_type": "source_incident",
+    "aggregate_id": "incident-deepfake-0001",
+    "occurred_at": "2026-09-04T15:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "fact_review_id": "fact-review-0001"
+    }
+  },
+  {
+    "event_id": "evt-2026-0007",
+    "event_type": "RIGHTS_REVIEW_COMPLETED",
+    "aggregate_type": "rights_review",
+    "aggregate_id": "rights-review-0001",
+    "occurred_at": "2026-09-05T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "reviewer_id": "rights-zhao",
+      "decision": "granted_with_limits"
+    }
+  },
+  {
+    "event_id": "evt-2026-0008",
+    "event_type": "DEIDENTIFICATION_PUBLISHED",
+    "aggregate_type": "deidentified_version",
+    "aggregate_id": "deident-0001",
+    "occurred_at": "2026-09-05T11:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "source_evidence_id": "evidence-0001",
+      "anonymization_level": "full"
+    }
+  },
+  {
+    "event_id": "evt-2026-0009",
+    "event_type": "ETHICAL_ISSUE_RECORDED",
+    "aggregate_type": "ethical_issue",
+    "aggregate_id": "ethics-0001",
+    "occurred_at": "2026-09-06T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "summary": "当事人隐私保护与公众知情权之间的平衡"
+    }
+  },
+  {
+    "event_id": "evt-2026-0010",
+    "event_type": "REGULATION_UPDATED",
+    "aggregate_type": "applicable_regulation",
+    "aggregate_id": "regulation-0001",
+    "occurred_at": "2026-09-06T09:30:00+08:00",
+    "version": 1,
+    "payload": {
+      "regulation_ref": "互联网信息服务深度合成管理规定",
+      "effective_at": "2026-01-01T00:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0011",
+    "event_type": "CHAPTER_RELEASED",
+    "aggregate_type": "textbook_chapter",
+    "aggregate_id": "chapter-0001",
+    "occurred_at": "2026-09-06T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "textbook_id": "textbook-fusion-news-a",
+      "edition": "3"
+    }
+  },
+  {
+    "event_id": "evt-2026-0012",
+    "event_type": "OBJECTIVE_DEFINED",
+    "aggregate_type": "course_objective",
+    "aggregate_id": "objective-0001",
+    "occurred_at": "2026-09-06T10:30:00+08:00",
+    "version": 1,
+    "payload": {
+      "course_id": "course-fusion-news-101",
+      "summary": "训练学生识别深度伪造内容并完成核验流程"
+    }
+  },
+  {
+    "event_id": "evt-2026-0013",
+    "event_type": "CASE_PROPOSED",
+    "aggregate_type": "teaching_case",
+    "aggregate_id": "case-0001",
+    "occurred_at": "2026-09-07T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "editor_id": "editor-wang",
+      "chapter_id": "chapter-0001",
+      "objective_ids": ["objective-0001"],
+      "ethical_issue_ids": ["ethics-0001"],
+      "regulation_ids": ["regulation-0001"]
+    }
+  },
+  {
+    "event_id": "evt-2026-0014",
+    "event_type": "CASE_REVIEWED",
+    "aggregate_type": "teaching_case",
+    "aggregate_id": "case-0001",
+    "occurred_at": "2026-09-08T09:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "fact_review_id": "fact-review-0001",
+      "rights_review_id": "rights-review-0001",
+      "decision": "approved_with_restrictions"
+    }
+  },
+  {
+    "event_id": "evt-2026-0015",
+    "event_type": "MATERIAL_PUBLISHED",
+    "aggregate_type": "classroom_material",
+    "aggregate_id": "material-0001",
+    "occurred_at": "2026-09-08T10:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "case_id": "case-0001",
+      "access_scope_id": "scope-0001",
+      "citation_format": "著者-出版年制（APA 第7版）"
+    }
+  },
+  {
+    "event_id": "evt-2026-0016",
+    "event_type": "ACCESS_SCOPED",
+    "aggregate_type": "access_scope",
+    "aggregate_id": "scope-0001",
+    "occurred_at": "2026-09-08T10:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "material_id": "material-0001",
+      "audience": "enrolled_students"
+    }
+  },
+  {
+    "event_id": "evt-2026-0017",
+    "event_type": "RESTRICTION_IMPOSED",
+    "aggregate_type": "access_scope",
+    "aggregate_id": "scope-0002",
+    "occurred_at": "2026-09-08T11:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "material_id": "material-0002",
+      "reason": "minor_involved",
+      "scope": "minimal",
+      "effective_at": "2026-09-08T00:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0018",
+    "event_type": "EXPORT_DENIED",
+    "aggregate_type": "classroom_material",
+    "aggregate_id": "material-0002",
+    "occurred_at": "2026-09-09T08:30:00+08:00",
+    "version": 1,
+    "payload": {
+      "requested_by": "teacher-chen",
+      "reason": "minor_involved"
+    }
+  },
+  {
+    "event_id": "evt-2026-0019",
+    "event_type": "COURSE_ADOPTED",
+    "aggregate_type": "course_adoption",
+    "aggregate_id": "adoption-0001",
+    "occurred_at": "2026-09-10T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "course_id": "course-fusion-news-101",
+      "case_id": "case-0001",
+      "case_version": 2
+    }
+  },
+  {
+    "event_id": "evt-2026-0020",
+    "event_type": "COURSE_FROZEN",
+    "aggregate_type": "course_adoption",
+    "aggregate_id": "adoption-0001",
+    "occurred_at": "2026-09-11T00:00:00+08:00",
+    "version": 2,
+    "payload": {
+      "term_id": "2026-autumn",
+      "case_versions": [
+        { "case_id": "case-0001", "version": 2 }
+      ]
+    }
+  },
+  {
+    "event_id": "evt-2026-0021",
+    "event_type": "RULING_RECORDED",
+    "aggregate_type": "source_incident",
+    "aggregate_id": "incident-deepfake-0001",
+    "occurred_at": "2026-09-15T17:00:00+08:00",
+    "version": 4,
+    "payload": {
+      "ruling_ref": "（2026）京01民初1234号",
+      "effective_at": "2026-09-15T00:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0022",
+    "event_type": "CORRECTION_ISSUED",
+    "aggregate_type": "teaching_case",
+    "aggregate_id": "case-0001",
+    "occurred_at": "2026-09-20T09:00:00+08:00",
+    "version": 3,
+    "payload": {
+      "reason": "当事人匿名范围扩大，需替换课堂材料引用",
+      "effective_at": "2026-09-20T00:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0023",
+    "event_type": "LICENSE_WITHDRAWN",
+    "aggregate_type": "rights_holder",
+    "aggregate_id": "rights-holder-0001",
+    "occurred_at": "2026-09-25T12:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "license_ref": "license-0001",
+      "effective_at": "2026-09-25T00:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0024",
+    "event_type": "IMPACT_ASSESSED",
+    "aggregate_type": "course_adoption",
+    "aggregate_id": "adoption-0001",
+    "occurred_at": "2026-09-25T12:05:00+08:00",
+    "version": 3,
+    "payload": {
+      "cause_event_id": "evt-2026-0023",
+      "phase": "in_session",
+      "action": "suspend_material"
+    }
+  },
+  {
+    "event_id": "evt-2026-0025",
+    "event_type": "ACCESS_REVOKED",
+    "aggregate_type": "access_scope",
+    "aggregate_id": "scope-0001",
+    "occurred_at": "2026-09-25T12:10:00+08:00",
+    "version": 2,
+    "payload": {
+      "scope": "all",
+      "effective_at": "2026-09-25T13:00:00+08:00"
+    }
+  },
+  {
+    "event_id": "evt-2026-0026",
+    "event_type": "FOLLOWUP_ISSUED",
+    "aggregate_type": "followup_disposition",
+    "aggregate_id": "followup-0001",
+    "occurred_at": "2026-09-26T09:00:00+08:00",
+    "version": 1,
+    "payload": {
+      "course_id": "course-fusion-news-101",
+      "disposition": "record_annotated",
+      "basis_version": 2
+    }
+  },
+  {
+    "event_id": "evt-2026-0027",
+    "event_type": "NOTIFICATION_DISPATCHED",
+    "aggregate_type": "notification",
+    "aggregate_id": "notification-0001",
+    "occurred_at": "2026-09-26T09:05:00+08:00",
+    "version": 1,
+    "payload": {
+      "notification_id": "notification-0001",
+      "dedup_key": "license-0001:withdrawn:adoption-0001",
+      "kind": "withdrawal_notice",
+      "caused_by_event_id": "evt-2026-0023"
+    }
+  }
+]

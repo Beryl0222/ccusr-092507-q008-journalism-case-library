@@ -6,6 +6,7 @@
 
 - `contracts/domain.schema.json`：事件信封、对象类型和事件载荷约定。
 - `data/sample.json`：可直接校验的中文联调样例。
+- `data/samples.json`：覆盖全部事件类型与聚合类型的联调样例集。
 - `src/`：契约校验与命令行入口。
 - `tests/`：基础字段、时间版本和事件载荷边界测试。
 - `docs/domain.md`：领域对象与事件语义。

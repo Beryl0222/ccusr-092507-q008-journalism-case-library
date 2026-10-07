@@ -5,5 +5,7 @@
   "aggregate_id": "journalism_case_library-001",
   "occurred_at": "2026-09-24T12:00:00+08:00",
   "version": 1,
-  "payload": {}
+  "payload": {
+    "fact_review_id": "fact-review-0001"
+  }
 }
